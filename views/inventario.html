@@ -37,20 +37,20 @@
                     cantidad: document.getElementById("cantidad").value,
                 };
 
-                const respuesta = await fetch("/nuevo-item", {
+                const respuesta = await fetch("/nuevoItem", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data),
                 });
 
-                alert(await respuesta.text());
+                showData();
             });
 
             const lista = document.getElementById("lista");
 
             async function showData() {
                 lista.innerHTML = "";
-                const resultados = await fetch("/get-items");
+                const resultados = await fetch("/getItems");
                 const datos = await resultados.json();
                 datos.forEach((element) => {
                     lista.innerHTML += `
@@ -63,11 +63,13 @@
             }
 
             async function deleteItem(e) {
-                await fetch("/borrar-item", {
+                await fetch("/borrarItem", {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ mensaje: e.target.id }),
                 });
+
+                showData();
             }
 
             showData();
