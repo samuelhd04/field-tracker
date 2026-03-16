@@ -1,5 +1,6 @@
 const path = require("path");
 const Item = require("../models/Item");
+const Note = require("../models/Note");
 
 const getHome = (req, res) => {
     res.sendFile(path.join(__dirname, "../views/home.html"));
@@ -18,10 +19,25 @@ const getItems = async (req, res) => {
     res.json(resultados);
 };
 
+const getTextos = async (req, res) => {
+    const resultados = await Note.find();
+    res.json(resultados);
+};
+
 const postItem = async (req, res) => {
     try {
         const nuevoItem = new Item(req.body);
         await nuevoItem.save();
+        res.send("Item guardado con éxito");
+    } catch (error) {
+        res.status(500).send("Error al guardar");
+    }
+};
+
+const postNota = async (req, res) => {
+    try {
+        const nuevaNota = new Note(req.body);
+        await nuevaNota.save();
         res.send("Item guardado con éxito");
     } catch (error) {
         res.status(500).send("Error al guardar");
@@ -33,11 +49,19 @@ const deleteItem = async (req, res) => {
     res.send("Borrado!");
 };
 
+const deleteNota = async (req, res) => {
+    await Note.deleteOne({ nombre: req.body.mensaje });
+    res.send("Borrado!");
+};
+
 module.exports = {
     getHome,
     getInventario,
     getNotas,
     getItems,
     postItem,
+    postNota,
     deleteItem,
+    deleteNota,
+    getTextos,
 };

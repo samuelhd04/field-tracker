@@ -8,5 +8,48 @@
     <body>
         <h1>Notas</h1>
         <a href="/">Ir a Home</a>
+
+        <form id="notesForm">
+            <textarea name="texto" id="textArea" rows="4" cols="50"></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <ul id="lista"></ul>
+
+        <script>
+            /* const form = document.getElementById("notesForm");
+            form.addEventListener("submit", async (e) => {
+                const resultados = await fetch("/getNotas");
+                const datos = await resultados.json();
+            }); */
+
+            const lista = document.getElementById("lista");
+
+            async function showData() {
+                lista.innerHTML = "";
+                const resultados = await fetch("/getNotas");
+                const datos = await resultados.json();
+                datos.forEach((element) => {
+                    lista.innerHTML += `
+                    <li>
+                        <span>${element.nombre}</span>
+                        <span>${element.texto}</span>
+                        <button id="${element.nombre}" onclick="deleteNota(event)">Borrar</button>
+                    </li>`;
+                });
+            }
+
+            async function deleteNota(e) {
+                await fetch("/borrarNota", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ mensaje: e.target.id }),
+                });
+
+                showData();
+            }
+
+            showData();
+        </script>
     </body>
 </html>
