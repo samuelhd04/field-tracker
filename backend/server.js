@@ -4,7 +4,6 @@ require("dotenv").config();
 // imports
 const express = require("express");
 const mongo = require("mongoose");
-const Item = require("./models/Item");
 const itemControls = require("./controllers/itemController");
 const noteControls = require("./controllers/noteController");
 
@@ -27,14 +26,11 @@ mongo
     });
 
 // routes
-app.get("/", itemControls.getHome);
-app.get("/inventario", itemControls.getInventario);
-app.get("/notas", itemControls.getNotas);
-app.get("/getItems", itemControls.getItems);
-app.get("/getNotas", noteControls.getTextos);
+app.get("/api/getItems", itemControls.getItems);
+app.get("/api/getNotas", noteControls.getTextos);
 
-app.post("/nuevoItem", itemControls.postItem);
-app.post("/nuevaNota", noteControls.postNota);
+app.post("/api/nuevoItem", itemControls.postItem);
+app.post("/api/nuevaNota", noteControls.postNota);
 
-app.delete("/borrarItem", itemControls.deleteItem);
-app.delete("/borrarNota", noteControls.deleteNota);
+app.delete("/api/borrarItem", itemControls.deleteItem);
+app.delete("/api/borrarNota", noteControls.deleteNota);

@@ -1,4 +1,3 @@
-const path = require("path");
 const Note = require("../models/Note");
 
 const getTextos = async (req, res) => {

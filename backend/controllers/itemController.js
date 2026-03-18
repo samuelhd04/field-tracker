@@ -1,17 +1,4 @@
-const path = require("path");
 const Item = require("../models/Item");
-
-const getHome = (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/home.html"));
-};
-
-const getInventario = (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/inventario.html"));
-};
-
-const getNotas = (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/notas.html"));
-};
 
 const getItems = async (req, res) => {
     const resultados = await Item.find();
@@ -34,9 +21,6 @@ const deleteItem = async (req, res) => {
 };
 
 module.exports = {
-    getHome,
-    getInventario,
-    getNotas,
     getItems,
     postItem,
     deleteItem,
