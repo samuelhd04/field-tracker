@@ -6,6 +6,7 @@ const express = require("express");
 const mongo = require("mongoose");
 const Item = require("./models/Item");
 const itemControls = require("./controllers/itemController");
+const noteControls = require("./controllers/noteController");
 
 // express app
 const app = express();
@@ -15,9 +16,7 @@ app.use(express.json());
 
 // db connection
 mongo
-    .connect(
-        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pnqxfuz.mongodb.net/?appName=Cluster0`,
-    )
+    .connect(process.env.DB_URL)
     .then(() => {
         app.listen(3000, () => {
             console.log("Listening!");
@@ -32,10 +31,10 @@ app.get("/", itemControls.getHome);
 app.get("/inventario", itemControls.getInventario);
 app.get("/notas", itemControls.getNotas);
 app.get("/getItems", itemControls.getItems);
-app.get("/getNotas", itemControls.getTextos);
+app.get("/getNotas", noteControls.getTextos);
 
 app.post("/nuevoItem", itemControls.postItem);
-app.post("/nuevaNota", itemControls.postNota);
+app.post("/nuevaNota", noteControls.postNota);
 
 app.delete("/borrarItem", itemControls.deleteItem);
-app.delete("/borrarNota", itemControls.deleteNota);
+app.delete("/borrarNota", noteControls.deleteNota);

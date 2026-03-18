@@ -1,0 +1,28 @@
+const path = require("path");
+const Note = require("../models/Note");
+
+const getTextos = async (req, res) => {
+    const resultados = await Note.find();
+    res.json(resultados);
+};
+
+const postNota = async (req, res) => {
+    try {
+        const nuevaNota = new Note(req.body);
+        await nuevaNota.save();
+        res.send("Item guardado con éxito");
+    } catch (error) {
+        res.status(500).send("Error al guardar");
+    }
+};
+
+const deleteNota = async (req, res) => {
+    await Note.deleteOne({ nombre: req.body.mensaje });
+    res.send("Borrado!");
+};
+
+module.exports = {
+    getTextos,
+    postNota,
+    deleteNota,
+};
