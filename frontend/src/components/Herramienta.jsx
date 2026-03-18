@@ -17,6 +17,10 @@ const Herramienta = () => {
         fetchInventory();
     }, []);
 
+    const borrarHerramienta = async (id) => {
+        await fetch(`/api/borrarItem/${id}`, { method: "DELETE" });
+    };
+
     return (
         <ul>
             {herramientas &&
@@ -25,6 +29,13 @@ const Herramienta = () => {
                         <li>
                             <span>{herramienta.nombre}</span>
                             <span>{herramienta.cantidad}</span>
+                            <button
+                                onClick={() => {
+                                    borrarHerramienta(herramienta._id);
+                                }}
+                            >
+                                Borrar
+                            </button>
                         </li>
                     );
                 })}

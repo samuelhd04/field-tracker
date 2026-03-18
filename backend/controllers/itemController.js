@@ -16,7 +16,7 @@ const postItem = async (req, res) => {
 };
 
 const deleteItem = async (req, res) => {
-    await Item.deleteOne({ nombre: req.body.mensaje });
+    await Item.deleteOne({ _id: req.params.id });
     res.send("Borrado!");
 };
 
