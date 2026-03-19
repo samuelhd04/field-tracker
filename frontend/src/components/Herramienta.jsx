@@ -3,23 +3,22 @@ import { useState, useEffect } from "react";
 const Herramienta = () => {
     const [herramientas, setHerramientas] = useState(null);
 
-    useEffect(() => {
-        const fetchInventory = async () => {
-            const response = await fetch("/api/getItems");
-            const data = await response.json();
+    const fetchInventory = async () => {
+        const response = await fetch("/api/getItems");
+        const data = await response.json();
 
-            if (response.ok) {
-                setHerramientas(data);
-                console.log(data);
-            }
-        };
-
-        fetchInventory();
-    }, []);
+        if (response.ok) {
+            setHerramientas(data);
+        }
+    };
 
     const borrarHerramienta = async (id) => {
         await fetch(`/api/borrarItem/${id}`, { method: "DELETE" });
     };
+
+    useEffect(() => {
+        fetchInventory();
+    }, []);
 
     return (
         <ul>
