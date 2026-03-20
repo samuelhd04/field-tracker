@@ -4,6 +4,8 @@ import Item from "../components/Item";
 
 const Inventario = () => {
     const [items, setItems] = useState(null);
+    const [nombre, setNombre] = useState("");
+    const [cantidad, setCantidad] = useState("");
 
     const fetchInventario = async () => {
         const response = await fetch("/api/getItems");
@@ -16,6 +18,16 @@ const Inventario = () => {
 
     const borrarItem = async (id) => {
         await fetch(`/api/borrarItem/${id}`, { method: "DELETE" });
+    };
+
+    const postItem = async (e) => {
+        e.preventDefault();
+
+        await fetch("/api/nuevoItem", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, cantidad }),
+        });
     };
 
     useEffect(() => {
@@ -43,30 +55,32 @@ const Inventario = () => {
                     </div>
 
                     <div className="col-md-6">
-                        <form>
+                        <form onSubmit={postItem}>
                             <div className="mb-3">
-                                <label for="nombre" className="form-label">
-                                    Item
-                                </label>
+                                <label className="form-label">Item</label>
                                 <input
                                     type="text"
-                                    id="nombre"
                                     className="form-control"
+                                    onChange={(e) => {
+                                        setNombre(e.target.value);
+                                    }}
+                                    value={nombre}
                                 />
                             </div>
 
                             <div className="mb-3">
-                                <label for="cantidad" className="form-label">
-                                    Cantidad
-                                </label>
+                                <label className="form-label">Cantidad</label>
                                 <input
-                                    type="text"
-                                    id="cantidad"
+                                    type="number"
                                     className="form-control"
+                                    onChange={(e) => {
+                                        setCantidad(e.target.value);
+                                    }}
+                                    value={cantidad}
                                 />
                             </div>
 
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" className="btn btn-primary">
                                 Submit
                             </button>
                         </form>

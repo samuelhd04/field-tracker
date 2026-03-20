@@ -1,6 +1,6 @@
 const Item = ({ item, borrarItem }) => {
     return (
-        <div className="row">
+        <div className="row mb-3">
             <div className="col-md-6">{item.nombre}</div>
             <div className="col">{item.cantidad}</div>
             <div className="col">
