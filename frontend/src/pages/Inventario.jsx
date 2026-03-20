@@ -1,55 +1,77 @@
-//import Herramienta from "../components/Herramienta";
-import NavBar from "../components/NavBar";
 import { useState, useEffect } from "react";
+import NavBar from "../components/NavBar";
+import Item from "../components/Item";
 
 const Inventario = () => {
-    const [herramientas, setHerramientas] = useState(null);
+    const [items, setItems] = useState(null);
 
-    const fetchInventory = async () => {
+    const fetchInventario = async () => {
         const response = await fetch("/api/getItems");
         const data = await response.json();
 
         if (response.ok) {
-            setHerramientas(data);
+            setItems(data);
         }
     };
 
-    const borrarHerramienta = async (id) => {
+    const borrarItem = async (id) => {
         await fetch(`/api/borrarItem/${id}`, { method: "DELETE" });
     };
 
     useEffect(() => {
-        fetchInventory();
+        fetchInventario();
     }, []);
+
     return (
         <div className="inventario">
             <NavBar />
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="row mb-3">
+                            <div className="col-md-6">Item</div>
+                            <div className="col">Cantidad</div>
+                            <div className="col"></div>
+                        </div>
 
-            <main>
-                <form action="">
-                    <input type="text" />
-                </form>
-            </main>
+                        {items &&
+                            items.map((item) => {
+                                return (
+                                    <Item item={item} borrarItem={borrarItem} />
+                                );
+                            })}
+                    </div>
 
-            <div>
-                <ul>
-                    {herramientas &&
-                        herramientas.map((herramienta) => {
-                            return (
-                                <li>
-                                    <span>{herramienta.nombre}</span>
-                                    <span>{herramienta.cantidad}</span>
-                                    <button
-                                        onClick={() => {
-                                            borrarHerramienta(herramienta._id);
-                                        }}
-                                    >
-                                        Borrar
-                                    </button>
-                                </li>
-                            );
-                        })}
-                </ul>
+                    <div className="col-md-6">
+                        <form>
+                            <div className="mb-3">
+                                <label for="nombre" className="form-label">
+                                    Item
+                                </label>
+                                <input
+                                    type="text"
+                                    id="nombre"
+                                    className="form-control"
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label for="cantidad" className="form-label">
+                                    Cantidad
+                                </label>
+                                <input
+                                    type="text"
+                                    id="cantidad"
+                                    className="form-control"
+                                />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     );
