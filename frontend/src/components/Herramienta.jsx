@@ -21,24 +21,26 @@ const Herramienta = () => {
     }, []);
 
     return (
-        <ul>
-            {herramientas &&
-                herramientas.map((herramienta) => {
-                    return (
-                        <li>
-                            <span>{herramienta.nombre}</span>
-                            <span>{herramienta.cantidad}</span>
-                            <button
-                                onClick={() => {
-                                    borrarHerramienta(herramienta._id);
-                                }}
-                            >
-                                Borrar
-                            </button>
-                        </li>
-                    );
-                })}
-        </ul>
+        <div>
+            <ul>
+                {herramientas &&
+                    herramientas.map((herramienta) => {
+                        return (
+                            <li>
+                                <span>{herramienta.nombre}</span>
+                                <span>{herramienta.cantidad}</span>
+                                <button
+                                    onClick={() => {
+                                        borrarHerramienta(herramienta._id);
+                                    }}
+                                >
+                                    Borrar
+                                </button>
+                            </li>
+                        );
+                    })}
+            </ul>
+        </div>
     );
 };
 
