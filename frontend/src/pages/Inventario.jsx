@@ -32,7 +32,7 @@ const Inventario = () => {
 
     useEffect(() => {
         fetchInventario();
-    }, []);
+    }, [items]);
 
     return (
         <div className="inventario">
@@ -55,35 +55,48 @@ const Inventario = () => {
                     </div>
 
                     <div className="col-md-6">
-                        <form onSubmit={postItem}>
-                            <div className="mb-3">
-                                <label className="form-label">Item</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    onChange={(e) => {
-                                        setNombre(e.target.value);
-                                    }}
-                                    value={nombre}
-                                />
-                            </div>
+                        <div className="row justify-content-center">
+                            <div className="col-md-6">
+                                <form onSubmit={postItem}>
+                                    <div className="mb-2">
+                                        <label className="form-label">
+                                            Item
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            onChange={(e) => {
+                                                setNombre(e.target.value);
+                                            }}
+                                            value={nombre}
+                                            required
+                                        />
+                                    </div>
 
-                            <div className="mb-3">
-                                <label className="form-label">Cantidad</label>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    onChange={(e) => {
-                                        setCantidad(e.target.value);
-                                    }}
-                                    value={cantidad}
-                                />
-                            </div>
+                                    <div className="mb-3">
+                                        <label className="form-label">
+                                            Cantidad
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            onChange={(e) => {
+                                                setCantidad(e.target.value);
+                                            }}
+                                            value={cantidad}
+                                            required
+                                        />
+                                    </div>
 
-                            <button type="submit" className="btn btn-primary">
-                                Submit
-                            </button>
-                        </form>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                    >
+                                        Enviar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
