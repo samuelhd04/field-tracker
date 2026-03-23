@@ -33,4 +33,4 @@ app.post("/api/nuevoItem", itemControls.postItem);
 app.post("/api/nuevaNota", noteControls.postNota);
 
 app.delete("/api/borrarItem/:id", itemControls.deleteItem);
-app.delete("/api/borrarNota", noteControls.deleteNota);
+app.delete("/api/borrarNota/:id", noteControls.deleteNota);

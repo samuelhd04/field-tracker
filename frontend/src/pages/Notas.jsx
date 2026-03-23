@@ -1,18 +1,47 @@
-import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
+import Nota from "../components/Nota";
 
 const Notas = () => {
+    const [notas, setNotas] = useState(null);
     const [nombre, setNombre] = useState("");
     const [texto, setTexto] = useState("");
+
+    const fetchNotas = async () => {
+        const response = await fetch("/api/getNotas");
+        const data = await response.json();
+
+        if (response.ok) {
+            setNotas(data);
+        }
+    };
+
+    const borrarNota = async (id) => {
+        await fetch(`/api/borrarNota/${id}`, { method: "DELETE" });
+    };
+
+    const postNota = async (e) => {
+        e.preventDefault();
+
+        await fetch("/api/nuevaNota", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, texto }),
+        });
+    };
+
+    useEffect(() => {
+        fetchNotas();
+    }, [notas]);
 
     return (
         <div className="notas">
             <NavBar />
 
             <div className="container">
-                <div className="row justify-content-center">
+                <div className="row justify-content-center mb-4">
                     <div className="col-md-8">
-                        <form>
+                        <form onSubmit={postNota}>
                             <div className="row mb-2">
                                 <div className="col-md-4">
                                     <label className="form-label">Nombre</label>
@@ -44,7 +73,7 @@ const Notas = () => {
                                         className="form-control"
                                         required
                                         onChange={(e) => {
-                                            setNombre(e.target.value);
+                                            setTexto(e.target.value);
                                         }}
                                         value={texto}
                                     ></textarea>
@@ -54,7 +83,16 @@ const Notas = () => {
                     </div>
                 </div>
 
-                <div className="row"></div>
+                <div className="row justify-content-center">
+                    <div className="col-md-10">
+                        {notas &&
+                            notas.map((nota) => {
+                                return (
+                                    <Nota nota={nota} borrarNota={borrarNota} />
+                                );
+                            })}
+                    </div>
+                </div>
             </div>
         </div>
     );

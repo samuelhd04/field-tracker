@@ -16,7 +16,7 @@ const postNota = async (req, res) => {
 };
 
 const deleteNota = async (req, res) => {
-    await Note.deleteOne({ nombre: req.body.mensaje });
+    await Note.deleteOne({ _id: req.params.id });
     res.send("Borrado!");
 };
 
