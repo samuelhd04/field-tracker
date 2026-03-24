@@ -1,7 +1,7 @@
 const Note = require("../models/Note");
 
 const getTextos = async (req, res) => {
-    const resultados = await Note.find();
+    const resultados = await Note.find({ projectId: req.params.id });
     res.json(resultados);
 };
 

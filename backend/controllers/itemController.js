@@ -2,7 +2,6 @@ const Item = require("../models/Item");
 
 const getItems = async (req, res) => {
     const resultados = await Item.find({ projectId: req.params.id });
-    console.log(resultados);
     res.json(resultados);
 };
 

@@ -1,6 +1,6 @@
 const Nota = ({ nota, borrarNota }) => {
     return (
-        <div className="card y mb-4">
+        <div className="card keep-card mb-4">
             <div className="card-header d-flex">
                 {nota.nombre}
                 <button

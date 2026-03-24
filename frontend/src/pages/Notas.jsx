@@ -1,14 +1,16 @@
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Nota from "../components/Nota";
 
 const Notas = () => {
-    const [notas, setNotas] = useState(null);
+    const [notas, setNotas] = useState("");
     const [nombre, setNombre] = useState("");
     const [texto, setTexto] = useState("");
+    const { id: projectId } = useParams();
 
     const fetchNotas = async () => {
-        const response = await fetch("/api/getNotas");
+        const response = await fetch(`/api/getNotas/proyecto/${projectId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -18,21 +20,24 @@ const Notas = () => {
 
     const borrarNota = async (id) => {
         await fetch(`/api/borrarNota/${id}`, { method: "DELETE" });
+        fetchNotas();
     };
 
     const postNota = async (e) => {
         e.preventDefault();
 
-        await fetch("/api/nuevaNota", {
+        await fetch(`/api/nuevaNota/proyecto/${projectId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, texto }),
+            body: JSON.stringify({ nombre, texto, projectId }),
         });
+
+        fetchNotas();
     };
 
     useEffect(() => {
         fetchNotas();
-    }, [notas]);
+    }, []);
 
     return (
         <div className="notas">

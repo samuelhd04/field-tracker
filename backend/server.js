@@ -31,11 +31,11 @@ mongo
 // routes
 app.get("/api/getProyectos", projectControls.getProjects);
 app.get("/api/getItems/proyecto/:id", itemControls.getItems);
-app.get("/api/getNotas", noteControls.getTextos);
+app.get("/api/getNotas/proyecto/:id", noteControls.getTextos);
 
 app.post("/api/nuevoProyecto", projectControls.postProject);
 app.post("/api/nuevoItem/proyecto/:id", itemControls.postItem);
-app.post("/api/nuevaNota", noteControls.postNota);
+app.post("/api/nuevaNota/proyecto/:id", noteControls.postNota);
 
 app.delete("/api/borrarItem/:id", itemControls.deleteItem);
 app.delete("/api/borrarNota/:id", noteControls.deleteNota);

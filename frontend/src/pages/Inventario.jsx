@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import Item from "../components/Item";
 
 const Inventario = () => {
-    const [items, setItems] = useState(null);
+    const [items, setItems] = useState("");
     const [nombre, setNombre] = useState("");
     const [cantidad, setCantidad] = useState("");
     const { id: projectId } = useParams();
@@ -33,6 +33,7 @@ const Inventario = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, cantidad, projectId }),
         });
+
         fetchInventario();
     };
 
