@@ -37,5 +37,6 @@ app.post("/api/nuevoProyecto", projectControls.postProject);
 app.post("/api/nuevoItem/proyecto/:id", itemControls.postItem);
 app.post("/api/nuevaNota/proyecto/:id", noteControls.postNota);
 
+app.delete("/api/borrarProyecto/:id", projectControls.deleteProject);
 app.delete("/api/borrarItem/:id", itemControls.deleteItem);
 app.delete("/api/borrarNota/:id", noteControls.deleteNota);

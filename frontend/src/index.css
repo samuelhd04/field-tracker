@@ -1,5 +1,26 @@
+:root {
+    --keep-light-bg: #ffffff; /* Fondo principal blanco */
+    --keep-light-surface: #ffffff; /* Superficie de la nota */
+    --keep-light-border: #e0e0e0; /* Gris muy tenue para bordes */
+    --keep-light-text-main: #202124; /* Negro carbón para lectura fácil */
+    --keep-light-text-sec: #5f6368; /* Gris para descripciones */
+    --keep-light-shadow: rgba(0, 0, 0, 0.1);
+}
+
+.keep-white {
+    background-color: var(--keep-light-bg) !important;
+}
+
+.keep-yellow {
+    background-color: #fff475 !important;
+}
+
+.keep-border {
+    border-bottom: 1px solid lightgray !important;
+}
+
 html {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* body {

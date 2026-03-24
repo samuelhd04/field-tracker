@@ -18,11 +18,6 @@ const Notas = () => {
         }
     };
 
-    const borrarNota = async (id) => {
-        await fetch(`/api/borrarNota/${id}`, { method: "DELETE" });
-        fetchNotas();
-    };
-
     const postNota = async (e) => {
         e.preventDefault();
 
@@ -32,6 +27,11 @@ const Notas = () => {
             body: JSON.stringify({ nombre, texto, projectId }),
         });
 
+        fetchNotas();
+    };
+
+    const borrarNota = async (id) => {
+        await fetch(`/api/borrarNota/${id}`, { method: "DELETE" });
         fetchNotas();
     };
 

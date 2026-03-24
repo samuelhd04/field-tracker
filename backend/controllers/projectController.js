@@ -15,7 +15,13 @@ const postProject = async (req, res) => {
     }
 };
 
+const deleteProject = async (req, res) => {
+    await Project.deleteOne({ _id: req.params.id });
+    res.send("Borrado!");
+};
+
 module.exports = {
     postProject,
     getProjects,
+    deleteProject,
 };
