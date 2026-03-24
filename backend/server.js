@@ -3,6 +3,7 @@ require("dotenv").config();
 
 // imports
 const express = require("express");
+const cors = require("cors");
 const mongo = require("mongoose");
 const itemControls = require("./controllers/itemController");
 const noteControls = require("./controllers/noteController");
@@ -12,6 +13,7 @@ const projectControls = require("./controllers/projectController");
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(express.json());
 
 // db connection

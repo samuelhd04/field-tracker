@@ -14,9 +14,11 @@ const Home = () => {
         }
     };
 
+    const borrarProyecto = async () => {};
+
     useEffect(() => {
         fetchProyectos();
-    }, [proyectos]);
+    }, []);
 
     return (
         <div className="home">

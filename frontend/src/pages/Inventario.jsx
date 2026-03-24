@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Item from "../components/Item";
@@ -6,9 +7,10 @@ const Inventario = () => {
     const [items, setItems] = useState(null);
     const [nombre, setNombre] = useState("");
     const [cantidad, setCantidad] = useState("");
+    const { id: projectId } = useParams();
 
     const fetchInventario = async () => {
-        const response = await fetch("/api/getItems");
+        const response = await fetch(`/api/getItems/proyecto/${projectId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -17,22 +19,26 @@ const Inventario = () => {
     };
 
     const borrarItem = async (id) => {
-        await fetch(`/api/borrarItem/${id}`, { method: "DELETE" });
+        await fetch(`/api/borrarItem/${id}`, {
+            method: "DELETE",
+        });
+        fetchInventario();
     };
 
     const postItem = async (e) => {
         e.preventDefault();
 
-        await fetch("/api/nuevoItem", {
+        await fetch(`/api/nuevoItem/proyecto/${projectId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, cantidad }),
+            body: JSON.stringify({ nombre, cantidad, projectId }),
         });
+        fetchInventario();
     };
 
     useEffect(() => {
         fetchInventario();
-    }, [items]);
+    }, []);
 
     return (
         <div className="inventario">

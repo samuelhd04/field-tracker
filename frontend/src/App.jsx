@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import Proyectos from "./pages/Proyectos";
 import Inventario from "./pages/Inventario";
 import Notas from "./pages/Notas";
 
@@ -8,7 +8,7 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Proyectos />} />
                     <Route path="/Inventario/:id" element={<Inventario />} />
                     <Route path="/Notas" element={<Notas />} />
                 </Routes>
