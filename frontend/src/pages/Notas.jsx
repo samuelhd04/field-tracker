@@ -84,7 +84,7 @@ const Notas = () => {
                 </div>
 
                 <div className="row justify-content-center">
-                    <div className="col-md-10">
+                    <div className="col-md-9">
                         {notas &&
                             notas.map((nota) => {
                                 return (

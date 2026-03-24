@@ -1,10 +1,10 @@
 const Nota = ({ nota, borrarNota }) => {
     return (
-        <div className="card text-white bg-secondary mb-4">
-            <div className="card-header">
+        <div className="card y mb-4">
+            <div className="card-header d-flex">
                 {nota.nombre}
                 <button
-                    className="btn btn-danger btn-sm"
+                    className="btn btn-danger btn-sm ms-auto"
                     onClick={() => {
                         borrarNota(nota._id);
                     }}
