@@ -20,7 +20,7 @@ app.use(express.json());
 mongo
     .connect(process.env.DB_URL)
     .then(() => {
-        app.listen(3000, () => {
+        app.listen(process.env.PORT, () => {
             console.log("Listening!");
         });
     })
