@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Proyecto from "../components/Proyecto";
+import db from "../db";
 
 const Home = () => {
     const [proyectos, setProyectos] = useState("");

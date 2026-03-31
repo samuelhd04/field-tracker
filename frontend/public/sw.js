@@ -1,4 +1,4 @@
-const addResourcesToCache = async () => {
+/* const addResourcesToCache = async () => {
     const cache = await caches.open("v1");
     await cache.addAll([
         "/", // Tu ruta raíz
@@ -45,3 +45,22 @@ self.addEventListener("fetch", (event) => {
         })(),
     );
 });
+ */
+
+import { precacheAndRoute } from "workbox-precaching";
+/* import { registerRoute } from "workbox-routing";
+import { NetworkFirst } from "workbox-strategies";
+ */
+// El plugin reemplaza esto automáticamente con la lista real de tus assets
+// (JS, CSS, HTML) cada vez que haces build
+precacheAndRoute(self.__WB_MANIFEST);
+
+// Network-first para toda tu API
+/* registerRoute(
+    ({ url, request }) =>
+        url.pathname.startsWith("/api/") && request.method === "GET",
+    new NetworkFirst({
+        cacheName: "api-cache",
+        networkTimeoutSeconds: 5,
+    }),
+); */
