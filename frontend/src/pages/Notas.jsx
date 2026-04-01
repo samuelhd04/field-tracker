@@ -93,7 +93,11 @@ const Notas = () => {
                         {notas &&
                             notas.map((nota) => {
                                 return (
-                                    <Nota nota={nota} borrarNota={borrarNota} />
+                                    <Nota
+                                        key={nota._id}
+                                        nota={nota}
+                                        borrarNota={borrarNota}
+                                    />
                                 );
                             })}
                     </div>

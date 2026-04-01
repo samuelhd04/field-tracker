@@ -56,7 +56,11 @@ const Inventario = () => {
                         {items &&
                             items.map((item) => {
                                 return (
-                                    <Item item={item} borrarItem={borrarItem} />
+                                    <Item
+                                        key={item._id}
+                                        item={item}
+                                        borrarItem={borrarItem}
+                                    />
                                 );
                             })}
                     </div>

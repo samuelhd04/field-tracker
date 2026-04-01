@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
 import NavBar from "../components/NavBar";
 import Proyecto from "../components/Proyecto";
 import db from "../db";
 
 const Home = () => {
-    const [proyectos, setProyectos] = useState("");
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
+    const datos = useLiveQuery(() => db.proyectos.toArray());
 
     const fetchProyectos = async () => {
         const response = await fetch("/api/getProyectos");
         const data = await response.json();
 
         if (response.ok) {
-            setProyectos(data);
+            await db.proyectos.bulkPut(data);
         }
     };
 
@@ -91,10 +92,11 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="row">
-                    {proyectos &&
-                        proyectos.map((proyecto) => {
+                    {datos &&
+                        datos.map((proyecto) => {
                             return (
                                 <Proyecto
+                                    key={proyecto._id}
                                     proyecto={proyecto}
                                     borrarProyecto={borrarProyecto}
                                 />
