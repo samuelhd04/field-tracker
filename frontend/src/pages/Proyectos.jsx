@@ -21,20 +21,23 @@ const Home = () => {
     const postProyecto = async (e) => {
         e.preventDefault();
 
-        await fetch("/api/nuevoProyecto", {
+        const doc = await fetch("/api/nuevoProyecto", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, descripcion }),
         });
 
-        fetchProyectos();
+        const test = await doc.json();
+
+        db.proyectos.add(test);
     };
 
     const borrarProyecto = async (id) => {
         await fetch(`/api/borrarProyecto/${id}`, {
             method: "DELETE",
         });
-        fetchProyectos();
+
+        db.proyectos.delete(id);
     };
 
     useEffect(() => {
