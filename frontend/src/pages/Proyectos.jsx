@@ -3,6 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import NavBar from "../components/NavBar";
 import Proyecto from "../components/Proyecto";
 import db from "../db";
+import { ObjectId } from "bson";
 
 const Home = () => {
     const [nombre, setNombre] = useState("");
@@ -21,15 +22,34 @@ const Home = () => {
     const postProyecto = async (e) => {
         e.preventDefault();
 
-        const doc = await fetch("/api/nuevoProyecto", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, descripcion }),
-        });
+        try {
+            const doc = await fetch("/api/nuevoProyecto", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nombre, descripcion }),
+            });
 
-        const test = await doc.json();
+            const test = await doc.json();
 
-        db.proyectos.add(test);
+            db.proyectos.add(test);
+        } catch (error) {
+            const newID = new ObjectId().toString();
+
+            const objeto = {
+                _id: newID,
+                nombre: nombre,
+                descripcion: descripcion,
+            };
+
+            db.proyectos.add(objeto);
+
+            db.pendientes.add({
+                objeto: objeto,
+                tabla: "proyectos",
+                tipo: "POST",
+                sincronizado: false,
+            });
+        }
     };
 
     const borrarProyecto = async (id) => {
