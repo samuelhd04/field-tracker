@@ -47,6 +47,7 @@ const Home = () => {
                 objeto: objeto,
                 tabla: "proyectos",
                 tipo: "POST",
+                ruta: "/api/nuevoProyecto",
                 sincronizado: false,
             });
         }

@@ -23,9 +23,20 @@ window.addEventListener("offline", () => {
 window.addEventListener("online", async () => {
     const pendientes = await db.pendientes.toArray();
 
-    pendientes.forEach(pendiente => {
-        await fetch()
-    })
+    for (const pendiente of pendientes) {
+        const opciones = {
+            method: pendiente.tipo,
+        };
 
-    console.log(await db.pendientes.toArray());
+        if (pendiente.tipo !== "DELETE") {
+            opciones.headers = { "Content-Type": "application/json" };
+            opciones.body = JSON.stringify(pendiente.objeto);
+        }
+
+        const respuesta = await fetch(pendiente.ruta, opciones);
+
+        if (respuesta.ok) {
+            await db.pendientes.delete(pendiente.id);
+        }
+    }
 });
