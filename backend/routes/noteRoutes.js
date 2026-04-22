@@ -1,4 +1,5 @@
 const express = require("express");
+
 const noteControls = require("../controllers/noteController");
 
 const router = express.Router();
