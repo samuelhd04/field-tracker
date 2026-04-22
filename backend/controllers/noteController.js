@@ -1,27 +1,38 @@
 const Note = require("../models/Note");
 
-const getTextos = async (req, res) => {
-    const resultados = await Note.find({ projectId: req.params.id });
-    res.json(resultados);
-};
-
-const postNota = async (req, res) => {
+const getNotes = async (req, res) => {
     try {
-        const nuevaNota = new Note(req.body);
-        await nuevaNota.save();
-        res.send("Item guardado con éxito");
-    } catch (error) {
-        res.status(500).send("Error al guardar");
+        const notes = await Note.find({ projectId: req.params.id });
+        res.json(notes);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error al obtener notas del proyecto");
     }
 };
 
-const deleteNota = async (req, res) => {
-    await Note.deleteOne({ _id: req.params.id });
-    res.send("Borrado!");
+const postNote = async (req, res) => {
+    try {
+        const note = new Note(req.body);
+        await note.save();
+        res.status(201).send("Nota guardada!");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error al guardar nota");
+    }
+};
+
+const deleteNote = async (req, res) => {
+    try {
+        await Note.deleteOne({ _id: req.params.id });
+        res.send("Nota borrada!");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error al borrar nota");
+    }
 };
 
 module.exports = {
-    getTextos,
-    postNota,
-    deleteNota,
+    getNotes,
+    postNote,
+    deleteNote,
 };
