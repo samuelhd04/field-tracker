@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import NavBar from "../components/NavBar";
-import Proyecto from "../components/Proyecto";
+import Proyecto from "../components/Project";
+import { getProjects, postProject, deleteProject } from "../services/projectService";
 import db from "../db";
-import { ObjectId } from "bson";
+//import { ObjectId } from "bson";
 
-const Home = () => {
+const Projects = () => {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const datos = useLiveQuery(() => db.proyectos.toArray());
 
-    const fetchProyectos = async () => {
+    /* const fetchProyectos = async () => {
         const response = await fetch("/api/getProyectos");
         const data = await response.json();
 
         if (response.ok) {
             await db.proyectos.bulkPut(data);
         }
-    };
+    }; */
 
-    const postProyecto = async (e) => {
+    /* const postProyecto = async (e) => {
         e.preventDefault();
 
         try {
@@ -59,10 +60,10 @@ const Home = () => {
         });
 
         db.proyectos.delete(id);
-    };
+    }; */
 
     useEffect(() => {
-        fetchProyectos();
+        getProjects();
     }, []);
 
     return (
@@ -72,7 +73,13 @@ const Home = () => {
             <div className="container">
                 <div className="row justify-content-center mb-4">
                     <div className="col-md-8">
-                        <form onSubmit={postProyecto}>
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+
+                                postProject({ nombre, descripcion });
+                            }}
+                        >
                             <div className="row mb-2">
                                 <div className="col-md-4">
                                     <label className="form-label">Nombre</label>
@@ -88,10 +95,7 @@ const Home = () => {
                                 </div>
 
                                 <div className="col d-flex justify-contents-start align-items-end">
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary"
-                                    >
+                                    <button type="submit" className="btn btn-primary">
                                         Enviar
                                     </button>
                                 </div>
@@ -99,9 +103,7 @@ const Home = () => {
 
                             <div className="row">
                                 <div className="col">
-                                    <label className="form-label">
-                                        Descripción
-                                    </label>
+                                    <label className="form-label">Descripción</label>
                                     <textarea
                                         className="form-control"
                                         onChange={(e) => {
@@ -122,7 +124,7 @@ const Home = () => {
                                 <Proyecto
                                     key={proyecto._id}
                                     proyecto={proyecto}
-                                    borrarProyecto={borrarProyecto}
+                                    borrarProyecto={deleteProject}
                                 />
                             );
                         })}
@@ -132,4 +134,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Projects;

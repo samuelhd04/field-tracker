@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Item from "../components/Item";
 
-const Inventario = () => {
+const Items = () => {
     const [items, setItems] = useState("");
     const [nombre, setNombre] = useState("");
     const [cantidad, setCantidad] = useState("");
@@ -115,4 +115,4 @@ const Inventario = () => {
     );
 };
 
-export default Inventario;
+export default Items;

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-import Nota from "../components/Nota";
+import Nota from "../components/Note";
 
-const Notas = () => {
+const Notes = () => {
     const [notas, setNotas] = useState("");
     const [nombre, setNombre] = useState("");
     const [texto, setTexto] = useState("");
@@ -107,4 +107,4 @@ const Notas = () => {
     );
 };
 
-export default Notas;
+export default Notes;

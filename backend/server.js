@@ -4,9 +4,9 @@ const express = require("express");
 const cors = require("cors");
 const mongo = require("mongoose");
 
-const projectRoutes = require("./routes/projectRoutes");
-const itemRoutes = require("./routes/itemRoutes");
-const noteRoutes = require("./routes/noteRoutes");
+const projectRoutes = require("./routes/projectRoute");
+const itemRoutes = require("./routes/itemRoute");
+const noteRoutes = require("./routes/noteRoute");
 
 const app = express();
 
