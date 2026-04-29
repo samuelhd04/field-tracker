@@ -2,38 +2,42 @@ import db from "../db";
 import { ObjectId } from "bson";
 
 const getProjects = async () => {
-    const response = await fetch("/api/projects");
-    const projects = await response.json();
+    try {
+        const response = await fetch("/api/projects");
+        const projects = await response.json();
 
-    if (response.ok) {
-        await db.proyectos.bulkPut(projects);
+        if (response.ok) {
+            await db.proyectos.bulkPut(projects);
+        }
+    } catch (err) {
+        console.log("Error al obtener proyectos");
     }
 };
 
-const postProject = async ({ nombre, descripcion }) => {
+const postProject = async ({ name, description }) => {
     try {
-        const doc = await fetch("/api/projects", {
+        const response = await fetch("/api/projects", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, descripcion }),
+            body: JSON.stringify({ nombre: name, descripcion: description }),
         });
 
-        const test = await doc.json();
+        const project = await response.json();
 
-        db.proyectos.add(test);
-    } catch (error) {
-        const newID = new ObjectId().toString();
+        db.proyectos.add(project);
+    } catch (err) {
+        const id = new ObjectId().toString();
 
-        const objeto = {
-            _id: newID,
-            nombre: nombre,
-            descripcion: descripcion,
+        const project = {
+            _id: id,
+            nombre: name,
+            descripcion: description,
         };
 
-        db.proyectos.add(objeto);
+        db.proyectos.add(project);
 
         db.pendientes.add({
-            objeto: objeto,
+            proyecto: project,
             tabla: "proyectos",
             tipo: "POST",
             ruta: "/api/nuevoProyecto",
@@ -43,11 +47,15 @@ const postProject = async ({ nombre, descripcion }) => {
 };
 
 const deleteProject = async (id) => {
-    await fetch(`/api/projects/${id}`, {
-        method: "DELETE",
-    });
+    try {
+        await fetch(`/api/projects/${id}`, {
+            method: "DELETE",
+        });
 
-    db.proyectos.delete(id);
+        db.proyectos.delete(id);
+    } catch (err) {
+        console.log("Error al borrar proyecto");
+    }
 };
 
 export { getProjects, postProject, deleteProject };

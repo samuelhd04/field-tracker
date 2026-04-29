@@ -1,66 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import NavBar from "../components/NavBar";
-import Proyecto from "../components/Project";
+import Project from "../components/Project";
 import { getProjects, postProject, deleteProject } from "../services/projectService";
 import db from "../db";
-//import { ObjectId } from "bson";
 
 const Projects = () => {
-    const [nombre, setNombre] = useState("");
-    const [descripcion, setDescripcion] = useState("");
-    const datos = useLiveQuery(() => db.proyectos.toArray());
-
-    /* const fetchProyectos = async () => {
-        const response = await fetch("/api/getProyectos");
-        const data = await response.json();
-
-        if (response.ok) {
-            await db.proyectos.bulkPut(data);
-        }
-    }; */
-
-    /* const postProyecto = async (e) => {
-        e.preventDefault();
-
-        try {
-            const doc = await fetch("/api/nuevoProyecto", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ nombre, descripcion }),
-            });
-
-            const test = await doc.json();
-
-            db.proyectos.add(test);
-        } catch (error) {
-            const newID = new ObjectId().toString();
-
-            const objeto = {
-                _id: newID,
-                nombre: nombre,
-                descripcion: descripcion,
-            };
-
-            db.proyectos.add(objeto);
-
-            db.pendientes.add({
-                objeto: objeto,
-                tabla: "proyectos",
-                tipo: "POST",
-                ruta: "/api/nuevoProyecto",
-                sincronizado: false,
-            });
-        }
-    };
-
-    const borrarProyecto = async (id) => {
-        await fetch(`/api/borrarProyecto/${id}`, {
-            method: "DELETE",
-        });
-
-        db.proyectos.delete(id);
-    }; */
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const projects = useLiveQuery(() => db.proyectos.toArray());
 
     useEffect(() => {
         getProjects();
@@ -77,7 +25,7 @@ const Projects = () => {
                             onSubmit={(e) => {
                                 e.preventDefault();
 
-                                postProject({ nombre, descripcion });
+                                postProject({ name, description });
                             }}
                         >
                             <div className="row mb-2">
@@ -87,9 +35,9 @@ const Projects = () => {
                                         className="form-control"
                                         type="text"
                                         onChange={(e) => {
-                                            setNombre(e.target.value);
+                                            setName(e.target.value);
                                         }}
-                                        value={nombre}
+                                        value={name}
                                         required
                                     />
                                 </div>
@@ -107,9 +55,9 @@ const Projects = () => {
                                     <textarea
                                         className="form-control"
                                         onChange={(e) => {
-                                            setDescripcion(e.target.value);
+                                            setDescription(e.target.value);
                                         }}
-                                        value={descripcion}
+                                        value={description}
                                         required
                                     ></textarea>
                                 </div>
@@ -118,13 +66,13 @@ const Projects = () => {
                     </div>
                 </div>
                 <div className="row">
-                    {datos &&
-                        datos.map((proyecto) => {
+                    {projects &&
+                        projects.map((project) => {
                             return (
-                                <Proyecto
-                                    key={proyecto._id}
-                                    proyecto={proyecto}
-                                    borrarProyecto={deleteProject}
+                                <Project
+                                    key={project._id}
+                                    project={project}
+                                    deleteProject={deleteProject}
                                 />
                             );
                         })}

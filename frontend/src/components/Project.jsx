@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 
-const Proyecto = ({ proyecto, borrarProyecto }) => {
+const Project = ({ project, deleteProject }) => {
     return (
         <div className="col-lg-4">
             <div className="card mb-4">
                 <div className="card-header d-flex justify-content-between align-items-center">
-                    {proyecto.nombre}
+                    {project.nombre}
                     <div className="d-flex">
                         <Link
-                            to={`/Inventario/${proyecto._id}`}
+                            to={`/Inventario/${project._id}`}
                             className="btn btn-secondary ms-auto me-2"
                         >
                             Inventario
                         </Link>
                         <Link
-                            to={`/Notas/${proyecto._id}`}
+                            to={`/Notas/${project._id}`}
                             className="btn btn-secondary ms-auto me-2"
                         >
                             Notas
@@ -23,7 +23,7 @@ const Proyecto = ({ proyecto, borrarProyecto }) => {
                         <button
                             className="btn btn-danger btn-sm ms-auto"
                             onClick={() => {
-                                borrarProyecto(proyecto._id);
+                                deleteProject(project._id);
                             }}
                         >
                             <i className="bi bi-trash"></i>
@@ -31,11 +31,11 @@ const Proyecto = ({ proyecto, borrarProyecto }) => {
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="card-text">{proyecto.descripcion}</div>
+                    <div className="card-text">{project.descripcion}</div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Proyecto;
+export default Project;
