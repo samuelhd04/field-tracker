@@ -24,7 +24,7 @@ const postProject = async ({ name, description }) => {
 
         const project = await response.json();
 
-        db.proyectos.add(project);
+        await db.proyectos.put(project);
     } catch (err) {
         const id = new ObjectId().toString();
 
@@ -34,14 +34,13 @@ const postProject = async ({ name, description }) => {
             descripcion: description,
         };
 
-        db.proyectos.add(project);
+        await db.proyectos.put(project);
 
-        db.pendientes.add({
+        await db.pendientes.put({
             proyecto: project,
             tabla: "proyectos",
             tipo: "POST",
-            ruta: "/api/nuevoProyecto",
-            sincronizado: false,
+            ruta: "/api/projects",
         });
     }
 };
@@ -52,9 +51,15 @@ const deleteProject = async (id) => {
             method: "DELETE",
         });
 
-        db.proyectos.delete(id);
+        await db.proyectos.delete(id);
     } catch (err) {
-        console.log("Error al borrar proyecto");
+        await db.proyectos.delete(id);
+
+        await db.pendientes.put({
+            tabla: "proyectos",
+            tipo: "DELETE",
+            ruta: `/api/projects/${id}`,
+        });
     }
 };
 

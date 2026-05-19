@@ -21,22 +21,26 @@ window.addEventListener("offline", () => {
 });
 
 window.addEventListener("online", async () => {
-    const pendientes = await db.pendientes.toArray();
+    const pendingTasks = await db.pendientes.toArray();
 
-    for (const pendiente of pendientes) {
-        const opciones = {
-            method: pendiente.tipo,
-        };
+    for (const task of pendingTasks) {
+        if (task.tipo === "POST") {
+            if (task.tabla === "proyectos") {
+                try {
+                    const response = await fetch(task.ruta, {
+                        method: task.tipo,
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(task.proyecto),
+                    });
 
-        if (pendiente.tipo !== "DELETE") {
-            opciones.headers = { "Content-Type": "application/json" };
-            opciones.body = JSON.stringify(pendiente.objeto);
-        }
-
-        const respuesta = await fetch(pendiente.ruta, opciones);
-
-        if (respuesta.ok) {
-            await db.pendientes.delete(pendiente.id);
+                    if (response.ok) {
+                        await db.pendientes.delete(task.id);
+                        await db.proyectos.put(await response.json());
+                    }
+                } catch (err) {
+                    console.log("Error al sincronizar");
+                }
+            }
         }
     }
 });
