@@ -1,43 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
 import NavBar from "../components/NavBar";
 import Nota from "../components/Note";
+import { getNotes, postNote, deleteNote } from "../services/noteService";
+import db from "../db";
 
 const Notes = () => {
-    const [notas, setNotas] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [texto, setTexto] = useState("");
+    const [name, setName] = useState("");
+    const [text, setText] = useState("");
     const { id: projectId } = useParams();
-
-    const fetchNotas = async () => {
-        const response = await fetch(`/api/getNotas/proyecto/${projectId}`);
-        const data = await response.json();
-
-        if (response.ok) {
-            setNotas(data);
-        }
-    };
-
-    const postNota = async (e) => {
-        e.preventDefault();
-
-        await fetch(`/api/nuevaNota/proyecto/${projectId}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, texto, projectId }),
-        });
-
-        fetchNotas();
-    };
-
-    const borrarNota = async (id) => {
-        await fetch(`/api/borrarNota/${id}`, { method: "DELETE" });
-        fetchNotas();
-    };
+    const notas = useLiveQuery(
+        () => db.notas.where("projectId").equals(projectId).toArray(),
+        [projectId],
+    );
 
     useEffect(() => {
-        fetchNotas();
-    }, []);
+        getNotes(projectId);
+    }, [projectId]);
 
     return (
         <div className="notas">
@@ -46,7 +26,13 @@ const Notes = () => {
             <div className="container">
                 <div className="row justify-content-center mb-4">
                     <div className="col-md-8">
-                        <form onSubmit={postNota}>
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+
+                                postNote({ name, text, projectId });
+                            }}
+                        >
                             <div className="row mb-2">
                                 <div className="col-md-4">
                                     <label className="form-label">Nombre</label>
@@ -54,9 +40,9 @@ const Notes = () => {
                                         className="form-control"
                                         type="text"
                                         onChange={(e) => {
-                                            setNombre(e.target.value);
+                                            setName(e.target.value);
                                         }}
-                                        value={nombre}
+                                        value={name}
                                         required
                                     />
                                 </div>
@@ -78,9 +64,9 @@ const Notes = () => {
                                         className="form-control"
                                         required
                                         onChange={(e) => {
-                                            setTexto(e.target.value);
+                                            setText(e.target.value);
                                         }}
-                                        value={texto}
+                                        value={text}
                                     ></textarea>
                                 </div>
                             </div>
@@ -96,7 +82,7 @@ const Notes = () => {
                                     <Nota
                                         key={nota._id}
                                         nota={nota}
-                                        borrarNota={borrarNota}
+                                        deleteNote={deleteNote}
                                     />
                                 );
                             })}

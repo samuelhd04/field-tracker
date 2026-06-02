@@ -14,7 +14,9 @@ const getProjects = async () => {
     }
 };
 
-const postProject = async ({ name, description }) => {
+const postProject = async (data) => {
+    const { name, description } = data;
+
     try {
         const response = await fetch("/api/projects", {
             method: "POST",

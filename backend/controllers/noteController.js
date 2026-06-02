@@ -13,8 +13,8 @@ const getNotes = async (req, res) => {
 const postNote = async (req, res) => {
     try {
         const note = new Note(req.body);
-        await note.save();
-        res.status(201).send("Nota guardada!");
+        const savedNote = await note.save();
+        res.status(201).json(savedNote);
     } catch (err) {
         console.log(err);
         res.status(500).send("Error al guardar nota");

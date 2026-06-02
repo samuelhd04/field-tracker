@@ -8,13 +8,13 @@ const Project = ({ project, deleteProject }) => {
                     {project.nombre}
                     <div className="d-flex">
                         <Link
-                            to={`/Inventario/${project._id}`}
+                            to={`/items/${project._id}`}
                             className="btn btn-secondary ms-auto me-2"
                         >
                             Inventario
                         </Link>
                         <Link
-                            to={`/Notas/${project._id}`}
+                            to={`/notes/${project._id}`}
                             className="btn btn-secondary ms-auto me-2"
                         >
                             Notas

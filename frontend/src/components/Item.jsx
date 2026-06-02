@@ -1,4 +1,4 @@
-const Item = ({ item, borrarItem }) => {
+const Item = ({ item, deleteItem }) => {
     return (
         <div className="row mb-3">
             <div className="col-md-6">{item.nombre}</div>
@@ -7,7 +7,7 @@ const Item = ({ item, borrarItem }) => {
                 <button
                     className="btn btn-danger btn-sm"
                     onClick={() => {
-                        borrarItem(item._id);
+                        deleteItem(item._id);
                     }}
                 >
                     <i className="bi bi-trash"></i>

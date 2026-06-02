@@ -14,7 +14,9 @@ const getItems = async (projectId) => {
     }
 };
 
-const postItem = async ({ name, quantity, projectId }) => {
+const postItem = async (data) => {
+    const { name, quantity, projectId } = data;
+
     try {
         const response = await fetch(`/api/projects/${projectId}/items`, {
             method: "POST",

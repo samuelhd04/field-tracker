@@ -1,4 +1,4 @@
-const Nota = ({ nota, borrarNota }) => {
+const Nota = ({ nota, deleteNote }) => {
     return (
         <div className="card keep-card mb-4">
             <div className="card-header d-flex">
@@ -6,7 +6,7 @@ const Nota = ({ nota, borrarNota }) => {
                 <button
                     className="btn btn-danger btn-sm ms-auto"
                     onClick={() => {
-                        borrarNota(nota._id);
+                        deleteNote(nota._id);
                     }}
                 >
                     <i className="bi bi-trash"></i>

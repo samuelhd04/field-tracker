@@ -13,8 +13,8 @@ const getItems = async (req, res) => {
 const postItem = async (req, res) => {
     try {
         const item = new Item(req.body);
-        await item.save();
-        res.status(201).send("Item guardado!");
+        const savedItem = await item.save();
+        res.status(201).json(savedItem);
     } catch (err) {
         console.log(err);
         res.status(500).send("Error al guardar item");
