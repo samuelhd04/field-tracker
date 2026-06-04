@@ -24,23 +24,33 @@ window.addEventListener("online", async () => {
     const pendingTasks = await db.pendientes.toArray();
 
     for (const task of pendingTasks) {
-        if (task.tipo === "POST") {
-            if (task.tabla === "proyectos") {
-                try {
-                    const response = await fetch(task.ruta, {
-                        method: task.tipo,
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(task.proyecto),
-                    });
+        try {
+            if (task.tipo === "POST") {
+                const data = task.proyecto || task.item || task.note;
 
-                    if (response.ok) {
-                        await db.pendientes.delete(task.id);
-                        await db.proyectos.put(await response.json());
-                    }
-                } catch (err) {
-                    console.log("Error al sincronizar");
+                const response = await fetch(task.ruta, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    await db.pendientes.delete(task.id);
+                    await db[task.tabla].put(await response.json());
                 }
             }
+
+            if (task.tipo === "DELETE") {
+                const response = await fetch(task.ruta, {
+                    method: "DELETE",
+                });
+
+                if (response.ok) {
+                    await db.pendientes.delete(task.id);
+                }
+            }
+        } catch (err) {
+            console.log("Error al sincronizar");
         }
     }
 });

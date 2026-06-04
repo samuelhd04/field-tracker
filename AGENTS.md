@@ -88,7 +88,6 @@ field-tracker/
 ## Current Status
 
 - **Projects:** Fully refactored (service layer, Dexie caching, offline queue, online sync).
-- **Items:** Old inline fetch, no Dexie, route mismatch (frontend calls `/api/getItems/proyecto/:id`, backend expects `/api/projects/:id/items`).
-- **Notes:** Old inline fetch, no Dexie, route mismatch (frontend calls `/api/getNotas/proyecto/:id`, backend expects `/api/projects/:id/notes`).
-- **Online sync in `main.jsx`:** Only handles `POST` for `proyectos` — `DELETE` and other tables not yet wired.
-- **Navigation:** `Project.jsx` links to `/Inventario/:id` and `/Notas/:id` but routes are `/items/:id` and `/notes/:id`.
+- **Items:** Fully refactored (service layer, Dexie caching, offline queue, online sync).
+- **Notes:** Fully refactored (service layer, Dexie caching, offline queue, online sync).
+- **Online sync in `main.jsx`:** Handles `POST` and `DELETE` for all tables (`proyectos`, `items`, `notas`).
