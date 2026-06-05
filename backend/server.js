@@ -16,13 +16,15 @@ app.use(express.json());
 mongo
     .connect(process.env.DB_URL)
     .then(() => {
-        app.listen(process.env.PORT, () => {
-            console.log("Listening!");
-        });
+        console.log("Connected to MongoDB");
     })
     .catch((err) => {
-        console.log(err);
+        console.log("MongoDB connection error:", err);
     });
+
+app.listen(process.env.PORT, () => {
+    console.log("Listening on port", process.env.PORT);
+});
 
 app.use(projectRoutes);
 app.use(itemRoutes);
