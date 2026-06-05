@@ -25,7 +25,9 @@ field-tracker/
 │       ├── db.js         # Dexie database definition
 │       ├── components/   # Presentational components
 │       ├── pages/        # Page-level components
-│       └── services/     # Offline-capable API services
+│       ├── services/     # Offline-capable API services
+│       ├── config.js     # API base URL (VITE_API_URL env var)
+│       └── vercel.json   # SPA fallback rewrites
 └── AGENTS.md
 ```
 
@@ -84,6 +86,15 @@ field-tracker/
 | `/` | `<Projects />` | Project list |
 | `/items/:id` | `<Items />` | Items for a project |
 | `/notes/:id` | `<Notes />` | Notes for a project |
+
+## Deployment
+
+- **Frontend:** Vercel (set `VITE_API_URL` env var to Render backend URL)
+- **Backend:** Render (set `DB_URL` env var to MongoDB Atlas connection string)
+- **Database:** MongoDB Atlas
+- **`config.js`** — Reads `VITE_API_URL`, empty string in dev (Vite proxy handles `/api`)
+- **`vercel.json`** — Rewrites all routes to `index.html` for React Router SPA support
+- **Service worker** — `controllerchange` event reloads the page on new SW activation
 
 ## Current Status
 

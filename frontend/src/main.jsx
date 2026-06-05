@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
 import db from "./db";
+import API_URL from "./config";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
@@ -14,6 +15,10 @@ createRoot(document.getElementById("root")).render(
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
+
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+        window.location.reload();
+    });
 }
 
 window.addEventListener("offline", () => {
@@ -28,7 +33,7 @@ window.addEventListener("online", async () => {
             if (task.tipo === "POST") {
                 const data = task.proyecto || task.item || task.note;
 
-                const response = await fetch(task.ruta, {
+                const response = await fetch(`${API_URL}${task.ruta}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data),
@@ -41,7 +46,7 @@ window.addEventListener("online", async () => {
             }
 
             if (task.tipo === "DELETE") {
-                const response = await fetch(task.ruta, {
+                const response = await fetch(`${API_URL}${task.ruta}`, {
                     method: "DELETE",
                 });
 

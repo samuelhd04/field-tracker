@@ -1,9 +1,10 @@
 import db from "../db";
 import { ObjectId } from "bson";
+import API_URL from "../config";
 
 const getProjects = async () => {
     try {
-        const response = await fetch("/api/projects");
+        const response = await fetch(`${API_URL}/api/projects`);
         const projects = await response.json();
 
         if (response.ok) {
@@ -18,7 +19,7 @@ const postProject = async (data) => {
     const { name, description } = data;
 
     try {
-        const response = await fetch("/api/projects", {
+        const response = await fetch(`${API_URL}/api/projects`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre: name, descripcion: description }),
@@ -42,14 +43,14 @@ const postProject = async (data) => {
             proyecto: project,
             tabla: "proyectos",
             tipo: "POST",
-            ruta: "/api/projects",
+            ruta: `/api/projects`,
         });
     }
 };
 
 const deleteProject = async (id) => {
     try {
-        await fetch(`/api/projects/${id}`, {
+        await fetch(`${API_URL}/api/projects/${id}`, {
             method: "DELETE",
         });
 
