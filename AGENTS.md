@@ -26,8 +26,8 @@ field-tracker/
 │       ├── components/   # Presentational components
 │       ├── pages/        # Page-level components
 │       ├── services/     # Offline-capable API services
-│       ├── config.js     # API base URL (VITE_API_URL env var)
-│       └── vercel.json   # SPA fallback rewrites
+│       └── config.js     # API base URL (VITE_API_URL env var)
+├── vercel.json           # SPA fallback + rootDirectory config
 └── AGENTS.md
 ```
 
