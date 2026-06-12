@@ -20,11 +20,12 @@ mongo
     })
     .catch((err) => {
         console.log("MongoDB connection error:", err);
+    })
+    .finally(() => {
+        app.listen(process.env.PORT, () => {
+            console.log("Listening on port", process.env.PORT);
+        });
     });
-
-app.listen(process.env.PORT, () => {
-    console.log("Listening on port", process.env.PORT);
-});
 
 app.use(projectRoutes);
 app.use(itemRoutes);
