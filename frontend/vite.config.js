@@ -15,8 +15,10 @@ export default defineConfig({
                 type: "module",
             },
             manifest: {
-                name: "Mi App",
+                name: "Bitácora",
                 display: "standalone",
+                theme_color: "white",
+                background_color: "black",
                 start_url: "/",
                 icons: [
                     {
