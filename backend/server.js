@@ -26,6 +26,8 @@ mongo
             console.log("Listening on port", process.env.PORT);
         });
     });
+    
+app.get('/', (req, res) => res.send('OK'));
 
 app.use(projectRoutes);
 app.use(itemRoutes);
