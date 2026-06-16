@@ -12,7 +12,7 @@ const Projects = () => {
 
     useEffect(() => {
         getProjects();
-    }, []);
+    }, [projects]);
 
     return (
         <div className="home">
