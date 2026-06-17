@@ -12,8 +12,8 @@ const NavBar = (props) => {
                     </li>
                 </ul>
 
-                <button classname="btn btn-primary" onClick={() => props.getFunction()}>
-                    Sincronizar
+                <button onClick={() => props.getFunction()}>
+                    <i classname="bi bi-arrow-repeat"></i>
                 </button>
             </div>
         </nav>

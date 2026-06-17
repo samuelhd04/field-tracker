@@ -10,7 +10,7 @@ const Item = ({ item, deleteItem }) => {
                         deleteItem(item._id);
                     }}
                 >
-                    <i className="bi bi-trash"></i>
+                    <i className="bi bi-trash3-fill"></i>
                 </button>
             </div>
         </div>
