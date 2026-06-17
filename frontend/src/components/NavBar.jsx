@@ -7,7 +7,7 @@ const NavBar = (props) => {
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <Link className="nav-link" to="/">
-                            props.name
+                            {props.name}
                         </Link>
                     </li>
                 </ul>
