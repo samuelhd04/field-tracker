@@ -9,6 +9,9 @@ const getItems = async (projectId) => {
 
         if (response.ok) {
             await db.items.bulkPut(items);
+
+            const ids = items.map((item) => item._id);
+            await db.items.where("_id").noneOf(ids).delete();
         }
     } catch (err) {
         console.log("Error al obtener items");

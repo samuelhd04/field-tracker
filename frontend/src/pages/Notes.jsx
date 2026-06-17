@@ -21,7 +21,12 @@ const Notes = () => {
 
     return (
         <div className="notas">
-            <NavBar name="Volver" getFunction={getNotes} />
+            <NavBar
+                name="Volver"
+                getFunction={() => {
+                    getItems(projectId);
+                }}
+            />
 
             <div className="container">
                 <div className="row justify-content-center mb-4">

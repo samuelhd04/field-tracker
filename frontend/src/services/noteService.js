@@ -9,6 +9,9 @@ const getNotes = async (projectId) => {
 
         if (response.ok) {
             await db.notas.bulkPut(notes);
+
+            const ids = notes.map((note) => note._id);
+            await db.notes.where("_id").noneOf(ids).delete();
         }
     } catch (err) {
         console.log("Error al obtener notas");

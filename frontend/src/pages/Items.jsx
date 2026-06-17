@@ -21,7 +21,12 @@ const Items = () => {
 
     return (
         <div className="inventario">
-            <NavBar name="Volver" getFunction={getItems} />
+            <NavBar
+                name="Volver"
+                getFunction={() => {
+                    getItems(projectId);
+                }}
+            />
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
