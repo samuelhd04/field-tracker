@@ -16,7 +16,7 @@ const Projects = () => {
 
     return (
         <div className="home">
-            <NavBar />
+            <NavBar name="Proyectos" getFunction={getProjects} />
 
             <div className="container">
                 <div className="row justify-content-center mb-4">

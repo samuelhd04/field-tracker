@@ -21,7 +21,7 @@ const Notes = () => {
 
     return (
         <div className="notas">
-            <NavBar />
+            <NavBar name="Volver" getFunction={getNotes} />
 
             <div className="container">
                 <div className="row justify-content-center mb-4">
@@ -48,10 +48,7 @@ const Notes = () => {
                                 </div>
 
                                 <div className="col d-flex justify-contents-start align-items-end">
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary"
-                                    >
+                                    <button type="submit" className="btn btn-primary">
                                         Enviar
                                     </button>
                                 </div>

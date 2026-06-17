@@ -1,28 +1,20 @@
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = (props) => {
     return (
         <nav className="navbar navbar-expand-sm keep-white keep-border mb-3">
             <div className="container">
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <Link className="nav-link" to="/">
-                            Proyectos
+                            props.name
                         </Link>
                     </li>
-
-                    {/* <li className="nav-item">
-                        <Link className="nav-link" to="/Inventario">
-                            Inventario
-                        </Link>
-                    </li> */}
-
-                    {/* <li className="nav-item">
-                        <Link className="nav-link" to="/Notas">
-                            Notas
-                        </Link>
-                    </li> */}
                 </ul>
+
+                <button classname="btn btn-primary" onClick={() => props.getFunction()}>
+                    Sincronizar
+                </button>
             </div>
         </nav>
     );
