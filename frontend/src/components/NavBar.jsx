@@ -12,7 +12,7 @@ const NavBar = (props) => {
                     </li>
                 </ul>
 
-                <button onClick={() => props.getFunction()}>
+                <button className="btn btn-secondary" onClick={() => props.getFunction()}>
                     <i className="bi bi-arrow-repeat"></i>
                 </button>
             </div>
