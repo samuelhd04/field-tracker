@@ -10,8 +10,17 @@ const getNotes = async (projectId) => {
         if (response.ok) {
             await db.notas.bulkPut(notes);
 
-            const ids = notes.map((note) => note._id);
-            await db.notes.where("_id").noneOf(ids).delete();
+            const pendingNotes = await db.pendientes
+                .where("tabla")
+                .equals("notas")
+                .and((task) => task.tipo === "POST")
+                .toArray();
+
+            const pendingIds = pendingNotes.map((task) => task.note._id);
+            const serverIds = notes.map((note) => note._id);
+            const allIds = [...new Set([...pendingIds, ...serverIds])];
+
+            await db.notas.where("_id").noneOf(allIds).delete();
         }
     } catch (err) {
         console.log("Error al obtener notas");

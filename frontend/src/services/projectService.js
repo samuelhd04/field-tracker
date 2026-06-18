@@ -2,7 +2,7 @@ import db from "../db";
 import { ObjectId } from "bson";
 import API_URL from "../config";
 
-/* const getProjects = async () => {
+const getProjects = async () => {
     try {
         const response = await fetch(`${API_URL}/api/projects`);
         const projects = await response.json();
@@ -13,6 +13,7 @@ import API_URL from "../config";
             const pendingProjects = await db.pendientes
                 .where("tabla")
                 .equals("proyectos")
+                .and((task) => task.tipo === "POST")
                 .toArray();
 
             const pendingIds = pendingProjects.map((task) => task.proyecto._id);
@@ -21,23 +22,6 @@ import API_URL from "../config";
             const allIds = [...new Set([...pendingIds, ...serverIds])];
 
             await db.proyectos.where("_id").noneOf(allIds).delete();
-        }
-    } catch (err) {
-        console.log("Error al obtener proyectos");
-    }
-}; */
-
-const getProjects = async () => {
-    try {
-        const response = await fetch(`${API_URL}/api/projects`);
-        const projects = await response.json();
-
-        if (response.ok) {
-            await db.proyectos.bulkPut(projects);
-
-            const ids = projects.map((project) => project._id);
-
-            await db.proyectos.where("_id").noneOf(ids).delete();
         }
     } catch (err) {
         console.log("Error al obtener proyectos");

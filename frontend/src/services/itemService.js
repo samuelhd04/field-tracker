@@ -10,8 +10,17 @@ const getItems = async (projectId) => {
         if (response.ok) {
             await db.items.bulkPut(items);
 
-            const ids = items.map((item) => item._id);
-            await db.items.where("_id").noneOf(ids).delete();
+            const pendingItems = await db.pendientes
+                .where("tabla")
+                .equals("items")
+                .and((task) => task.tipo === "POST")
+                .toArray();
+
+            const pendingIds = pendingItems.map((task) => task.item._id);
+            const serverIds = items.map((item) => item._id);
+            const allIds = [...new Set([...pendingIds, ...serverIds])];
+
+            await db.items.where("_id").noneOf(allIds).delete();
         }
     } catch (err) {
         console.log("Error al obtener items");

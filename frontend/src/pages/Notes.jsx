@@ -11,7 +11,7 @@ const Notes = () => {
     const [text, setText] = useState("");
     const { id: projectId } = useParams();
     const notas = useLiveQuery(
-        () => db.notas.where("projectId").equals(projectId).toArray(),
+        () => db.notas.where("projectId").equals(projectId).reverse().toArray(),
         [projectId],
     );
 

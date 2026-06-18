@@ -8,7 +8,7 @@ import db from "../db";
 const Projects = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const projects = useLiveQuery(() => db.proyectos.toArray());
+    const projects = useLiveQuery(() => db.proyectos.reverse().toArray());
 
     useEffect(() => {
         getProjects();

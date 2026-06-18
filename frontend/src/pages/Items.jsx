@@ -11,7 +11,7 @@ const Items = () => {
     const [quantity, setQuantity] = useState("");
     const { id: projectId } = useParams();
     const items = useLiveQuery(
-        () => db.items.where("projectId").equals(projectId).toArray(),
+        () => db.items.where("projectId").equals(projectId).reverse().toArray(),
         [projectId],
     );
 
