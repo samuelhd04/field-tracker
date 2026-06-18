@@ -2,6 +2,31 @@ import db from "../db";
 import { ObjectId } from "bson";
 import API_URL from "../config";
 
+/* const getProjects = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/projects`);
+        const projects = await response.json();
+
+        if (response.ok) {
+            await db.proyectos.bulkPut(projects);
+
+            const pendingProjects = await db.pendientes
+                .where("tabla")
+                .equals("proyectos")
+                .toArray();
+
+            const pendingIds = pendingProjects.map((task) => task.proyecto._id);
+            const serverIds = projects.map((project) => project._id);
+
+            const allIds = [...new Set([...pendingIds, ...serverIds])];
+
+            await db.proyectos.where("_id").noneOf(allIds).delete();
+        }
+    } catch (err) {
+        console.log("Error al obtener proyectos");
+    }
+}; */
+
 const getProjects = async () => {
     try {
         const response = await fetch(`${API_URL}/api/projects`);
@@ -10,12 +35,7 @@ const getProjects = async () => {
         if (response.ok) {
             await db.proyectos.bulkPut(projects);
 
-            const pendingTasks = await db.pendientes.toArray();
-
-            const pendingIds = pendingTasks.map((task) => task._id);
-            const projectsIds = projects.map((project) => project._id);
-
-            const allIds = [...new Set([...pendingIds, ...projectsIds])];
+            const ids = projects.map((project) => project._id);
 
             await db.proyectos.where("_id").noneOf(ids).delete();
         }
